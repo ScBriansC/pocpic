@@ -1,0 +1,280 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name=
+    viewport
+     content=
+     initial-scale=1.0, user-scalable=no
+    >
+    <meta charset=
+    utf-8
+    >
+    <title>Dibujar</title>
+    <style>
+      #map {
+        height: 100%;
+      }
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      #menu_superior{
+        position: absolute;
+        top: 50px;
+        left: 10px;
+        width: 100px;
+        z-index: 9000;
+        font-family: Arial;
+        font-size: 12px;
+        text-align: center;
+      }
+      #menu_superior a{
+        display: block;
+        margin-bottom: 5px;
+        background: #DDD;
+        color:#333;
+        text-decoration: none;
+        padding: 4px;
+      }
+
+      #menu_superior a:hover{
+        background: #EEE;
+        color:#F00;
+      }
+    </style>
+
+    <script src='assets/js/jquery-1.8.3.min.js'></script>
+    <script async defer src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAQGNCgXhTrE7TJROgFSOftaosTVUtqXY8&callback=initMap'></script>
+  </head>
+  <body>
+    <div id="menu_superior">
+      <a href="javascript:dibujar_api.limpiarDibujo();" class="acc_limpiar">Limpiar Mapa</a>
+      <a href="javascript:dibujar_api.cargarCoord();" class="acc_cargar_shape">Cargar Jurisdicción</a>
+      <a href="javascript:dibujar_api.descargarCoord();" class="acc_guardar_shape">Guardar Jurisdicción</a>
+      <input id="fArchivo" type="file" style="width: 1px; height: 1px;">
+    </div>
+    <div id="map"></div>
+    <script>
+
+      var dibujar_api ={
+
+        mapa: null,
+        markers_dibujo: null,
+        polyline_region: null,
+        polyline_base: null,
+        tipo_archivo: null,
+
+        init: function(){
+
+          dibujar_api.markers_dibujo = [];
+          dibujar_api.polyline_base = [];
+
+          dibujar_api.mapa = new google.maps.Map(document.getElementById('map'), {
+            zoom: 12,
+            center: {lat: -12.0081815576, lng: -77.004632437},
+          });
+
+          google.maps.event.addListener(dibujar_api.mapa, 'click', function(ev) {
+            dibujar_api.agregarMarker(ev.latLng); //Ejecutamos la función y pasamos como parámetro la latitud y longitud
+          });
+
+
+
+        },
+
+        removerMarker: function(mrk){
+          mrk.setMap(null);
+          var i = dibujar_api.markers_dibujo.indexOf(mrk);
+          if(i != -1) {
+            dibujar_api.markers_dibujo.splice(i, 1);
+          }
+          dibujar_api.dibujarLinea();
+        },
+
+        agregarMarker: function(latlong){
+          var marker = new google.maps.Marker({
+            position: latlong,
+            map: dibujar_api.mapa,
+            draggable:true,
+          }); 
+
+          google.maps.event.addListener(marker, 'dragend', function(){
+              dibujar_api.dibujarLinea();
+          });
+          
+          google.maps.event.addListener(marker, "dblclick", function (e) { 
+               var itm_self = this;
+               if(confirm('¿Desea Eliminar marker?')){
+                  dibujar_api.removerMarker(itm_self);
+               }
+            });
+
+          dibujar_api.markers_dibujo.push(marker);
+
+          dibujar_api.dibujarLinea();
+
+        },
+
+        dibujarLinea: function(){
+          if(dibujar_api.polyline_region!=null){
+            dibujar_api.polyline_region.setMap(null);
+            dibujar_api.polyline_region = null;
+          }
+
+          dibujar_api.polyline_region = new google.maps.Polyline({
+            path: dibujar_api.obtenerCoords(),
+            geodesic: true,
+            strokeColor: '#FF0000',
+            strokeOpacity: 1.0,
+            strokeWeight: 2
+          });
+
+          dibujar_api.polyline_region.setMap(dibujar_api.mapa);
+
+        },
+
+        agregarCoord: function(){
+          var cad = $.trim(prompt('Ingrese Lat,Long: '));
+          if(cad!=''){
+            var coord = cad.split(',');
+            var lat = parseFloat($.trim(coord[0]));
+            var lng = parseFloat($.trim(coord[1]));
+            var latlng = new google.maps.LatLng(lat, lng);
+
+            dibujar_api.agregarMarker(latlng);
+          }
+        },
+
+        obtenerCoords: function(){
+          var coords = [];
+
+          $.each(dibujar_api.markers_dibujo, function(idx, objx){
+            var posicion = objx.getPosition();
+            coords.push({lat:posicion.lat(), lng:posicion.lng()});
+          });
+
+          return coords;
+        },
+
+        obtenerJSON: function(){
+          var json = {data:[]};
+
+          $.each(dibujar_api.markers_dibujo, function(idx, objx){
+            var posicion = objx.getPosition();
+            json.data.push({lat:posicion.lat(), lng:posicion.lng()});
+          });
+
+          return (json);
+        },
+
+        cargarCoord: function(){
+          dibujar_api.tipo_archivo = 1;
+          $('#fArchivo').click();
+        },
+
+        cargarBase: function(){
+          dibujar_api.tipo_archivo = 2;
+          $('#fArchivo').click();
+        },
+
+        descargarCoord: function() {
+
+            var data = JSON.stringify(dibujar_api.obtenerJSON());
+            var pom = document.createElement('a');
+            pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(data));
+            pom.setAttribute('download', 'coordenadas.txt');
+
+            if (document.createEvent) {
+                var event = document.createEvent('MouseEvents');
+                event.initEvent('click', true, true);
+                pom.dispatchEvent(event);
+            }
+            else {
+                pom.click();
+            }
+
+        },
+        
+        limpiarDibujo : function(){
+
+          if(dibujar_api.polyline_region!=null){
+            dibujar_api.polyline_region.setMap(null);
+            dibujar_api.polyline_region = null;
+          }
+
+          if(dibujar_api.markers_dibujo!=null && dibujar_api.markers_dibujo.length > 0){
+            $.each(dibujar_api.markers_dibujo, function(idx, objx){
+              objx.setMap(null);
+            });
+            dibujar_api.markers_dibujo = null;
+            dibujar_api.markers_dibujo = [];
+          }
+
+
+        }
+
+      };
+
+      function initMap() {
+        dibujar_api.init();
+
+        $('#fArchivo').change(function(){
+          if (!window.FileReader) {
+              alert('El navegador no soporta la opción');
+              return false;
+          }
+          var input = $(this).get(0);
+
+          var reader = new FileReader();
+          if (input.files.length) {
+              var textFile = input.files[0];
+              // Read the file
+              reader.readAsText(textFile);
+              // When it's loaded, process it
+              $(reader).on('load', function(e) {
+                  var file = e.target.result;
+                  if (file && file.length) {
+
+                    var jObj = JSON.parse(file);
+
+                    if(dibujar_api.tipo_archivo == 1){ //Shape
+
+                      $.each(jObj.data, function(idx, objx){
+                        dibujar_api.agregarMarker(new google.maps.LatLng(objx.lat, objx.lng));
+                      });
+
+                    }else if(dibujar_api.tipo_archivo == 2){ //Base
+
+                      var coords = [];
+                      $.each(jObj.data, function(idx, objx){
+                        coords.push({lat:objx.lat, lng:objx.lng});
+                      });
+
+                      var base = new google.maps.Polyline({
+                        path: coords,
+                        geodesic: true,
+                        strokeColor: '#'+Math.floor(Math.random()*16777215).toString(16),
+                        strokeOpacity: 1.0,
+                        strokeWeight: 2
+                      });
+
+                      base.setMap(dibujar_api.mapa);
+
+                      dibujar_api.polyline_base.push(base);
+
+                    }
+
+                  }
+              });
+          } else {
+              alert('Por favor seleccione archivo')
+          } 
+        });
+      }
+
+    </script>
+  </body>
+</html>

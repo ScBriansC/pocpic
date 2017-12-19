@@ -1,0 +1,1128 @@
+.wrapper_mapa{
+    padding: 0;
+    position: relative;
+}
+
+.container-full {
+  width: 100%;
+  height: 100%;
+  position: relative; 
+  /*background-color: #feffee;*/
+  }
+
+.map-full {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  top: 0;
+  left: 0;
+  }
+
+.patrullero-marker {
+  position: absolute;
+  cursor: pointer;
+  width: 38px;
+  height: 45px;
+  z-index: 3000;
+  }
+
+.patrullero-marker:hover, .comisaria-marker:hover, .radio-marker:hover {
+  z-index: 5000; }
+
+.patrullero-marker .patrullero-placa, .patrullero-marker .patrullero-msj, .radio-marker .radio-msj, .radio-marker .radio-etiqueta {
+  display: none;
+  position: absolute;
+  bottom: 40px;
+  left: -30px;
+  padding: 4px 10px 4px 10px;
+  background: #FFF;
+  border-radius: 30px;
+  border: 1px solid #FFFFFF;
+  z-index: 1010;
+  width: 100px;
+  text-align: center;
+  }
+
+.alarma-marker .alarma-etiqueta, .camara-marker .camara-etiqueta, .incidencia-marker .incidencia-etiqueta {
+  display: none;
+  position: absolute;
+  bottom: 30px;
+  left: -30px;
+  padding: 4px 10px 4px 10px;
+  background: #FFF;
+  border-radius: 30px;
+  border: 1px solid #FFFFFF;
+  z-index: 1000;
+  width: 100px;
+  text-align: center;
+  }
+
+.patrullero-marker .bloque1 {
+  background: #FFF;
+  border-radius: 30px;
+  text-align: center;
+  padding: 4px;
+  z-index: 1050;
+  position: relative; }
+
+.patrullero-marker .bloque2 {
+  overflow: hidden;
+  border-radius: 30px;
+  width: 30px;
+  height: 30px; }
+
+.patrullero-marker:hover .patrullero-placa {
+  display: block; }
+
+.gm-style img {
+  max-width: none; }
+
+.patrullero-marker .pie {
+  display: block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 10px 0 10px;
+  border-color: #FFF transparent transparent transparent;
+  margin: -3px auto auto; }
+
+.vehiculo-info {
+  position: absolute;
+  z-index: 1000;
+  top: 20px;
+  width: 300px;
+  left: 20px;
+  display: none; }
+
+.vehiculo-info .content {
+  background: #FFF;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #da3a26;
+  position: relative; }
+
+.vehiculo-info .btn-close {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 30px;
+  height: 30px;
+  z-index: 1001;
+  background: #d22712;
+  display: block;
+  color: #FFF;
+  font-weight: bold;
+  text-align: center;
+  line-height: 27px;
+  text-decoration: none;
+  border-radius: 60px; }
+
+.vehiculo-info .radio-info .btn-ruta-radio {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  text-align: center;
+  height: 30px;
+  line-height: 27px;
+  margin-top: 10px;
+  z-index: 1003;
+  background: #36b592;
+  border-radius: 6px;
+  border: 1px solid #29846b;
+  text-decoration: none;
+  color: #FFF; }
+
+
+.vehiculo-info .btn-ruta {
+  width: 45%;
+  margin-left: auto;
+  margin-right: auto;
+  display: inline-block;
+  text-align: center;
+  height: 30px;
+  line-height: 27px;
+  margin-top: 10px;
+  z-index: 1003;
+  background: #36b592;
+  border-radius: 6px;
+  border: 1px solid #29846b;
+  text-decoration: none;
+  color: #FFF; }
+
+
+
+.vehiculo-info .btn-comision {
+  width: 45%;
+  margin-left: auto;
+  margin-right: auto;
+  display: inline-block;
+  text-align: center;
+  height: 30px;
+  line-height: 27px;
+  margin-top: 10px;
+  z-index: 1003;
+  background: #e4a736;
+  border-radius: 6px;
+  border: 1px solid #8a450b;
+  text-decoration: none;
+  color: #FFF; }
+
+
+
+  .vehiculo-info .btn-inirecorrido  {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  display: inline-block;
+  text-align: center;
+  height: 30px;
+  line-height: 27px;
+  margin-top: 10px;
+  z-index: 1003;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #2e6da4;
+  color: #FFF; }
+
+
+  .vehiculo-info .btn-finrecorrido {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  display: inline-block;
+  text-align: center;
+  height: 30px;
+  line-height: 27px;
+  margin-top: 10px;
+  z-index: 1003;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #fff;
+  background-color: #d9534f;
+  border-color: #d43f3a;
+  color: #FFF; }
+
+  .radio-info {
+  position: absolute;
+  z-index: 1000;
+  top: 20px;
+  width: 300px;
+  left: 20px;
+  display: none; }
+
+.radio-info .content {
+  background: #FFF;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #da3a26;
+  position: relative; }
+
+.radio-info .btn-close {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 30px;
+  height: 30px;
+  z-index: 1001;
+  background: #d22712;
+  display: block;
+  color: #FFF;
+  font-weight: bold;
+  text-align: center;
+  line-height: 27px;
+  text-decoration: none;
+  border-radius: 60px; }
+
+.radio-info .btn-ruta {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  text-align: center;
+  height: 30px;
+  line-height: 27px;
+  margin-top: 10px;
+  z-index: 1003;
+  background: #36b592;
+  border-radius: 6px;
+  border: 1px solid #29846b;
+  text-decoration: none;
+  color: #FFF; }
+  
+.comisaria-info .btn-mostrar-veh {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  text-align: center;
+  height: 30px;
+  line-height: 27px;
+  margin-top: 10px;
+  z-index: 1003;
+  background: #36b592;
+  border-radius: 6px;
+  border: 1px solid #29846b;
+  text-decoration: none;
+  color: #FFF;
+  }
+
+
+
+.comisaria-info {
+  position: absolute;
+  z-index: 1000;
+  top: 20px;
+  width: 300px;
+  left: 20px;
+  display: none; }
+
+.comisaria-info .content {
+  background: #FFF;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #da3a26;
+  position: relative; }
+
+.comisaria-info .btn-close {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 30px;
+  height: 30px;
+  z-index: 1001;
+  background: #d22712;
+  display: block;
+  color: #FFF;
+  font-weight: bold;
+  text-align: center;
+  line-height: 27px;
+  text-decoration: none;
+  border-radius: 60px; }
+
+.comisaria-info .btn-ruta {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  text-align: center;
+  height: 30px;
+  line-height: 27px;
+  margin-top: 10px;
+  z-index: 1003;
+  background: #36b592;
+  border-radius: 6px;
+  border: 1px solid #29846b;
+  text-decoration: none;
+  color: #FFF; }
+
+.filtro-info {
+  position: absolute;
+  z-index: 1010;
+  top: 20px;
+  /*width: 300px;*/
+  width: 340px;
+  left: 20px; }
+  .filtro-info.hidex {
+    width: 50px;
+    height: 50px; }
+    .filtro-info.hidex .content {
+      display: none; }
+    .filtro-info.hidex .btn-hide {
+      display: none; }
+    .filtro-info.hidex .btn-show {
+      display: block; }
+  .filtro-info .content {
+    background: #FFF;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #da3a26;
+    position: relative; }
+  .filtro-info .btn-hide {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 30px;
+    height: 30px;
+    z-index: 1001;
+    background: #d22712;
+    display: block;
+    color: #FFF;
+    font-weight: bold;
+    text-align: center;
+    line-height: 27px;
+    text-decoration: none;
+    border-radius: 60px; }
+  .filtro-info .btn-show {
+    position: absolute;
+    top: -10px;
+    left: 0;
+    width: 40px;
+    height: 40px;
+    z-index: 1001;
+    background: #b3b3b3;
+    color: #FFF;
+    font-weight: bold;
+    text-align: center;
+    line-height: 40px;
+    text-decoration: none;
+    border-radius: 60px;
+    font-size: 19px;
+    box-shadow: 0 0 10px #FFF;
+    display: none; }
+  .filtro-info .item {
+    width: 100%;
+    margin-bottom: 3px;
+    }
+    .filtro-info .item:after {
+      content: '';
+      display: block;
+      clear: both; }
+    .filtro-info .item label {
+      /*width: 80px;*/
+      width: 85px;
+      display: block;
+      float: left;
+      margin-bottom: 0;
+      margin-right: 10px;
+      font-weight: bold;
+      line-height: 27px; }
+    .filtro-info .item .field {
+      width: 166px;
+      float: left;
+      }
+      .filtro-info .item .field .input-fil, .filtro-info .item .field .select-fil {
+        width: 100%;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        padding: 2px 10px; 
+        /*padding: 1px 3px; */
+      }
+  .filtro-info .btn-filtrar {
+    width: 50%;
+    /*margin-left: 28px;*/
+    margin-left: 60px;
+    display: block;
+    text-align: center;
+    height: 30px;
+    line-height: 27px;
+    margin-top: 10px;
+    z-index: 1003;
+    background: #36b592;
+    border-radius: 6px;
+    border: 1px solid #29846b;
+    text-decoration: none;
+    color: #FFF;
+    float: left;
+    }
+
+.clear {
+  clear: both;
+  display: block; }
+
+
+
+
+.comisaria-marker {
+  position: absolute;
+  cursor: pointer;
+  width: 38px;
+  height: 45px;
+  z-index: 2000; }
+
+.comisaria-marker .comisaria-nombre {
+  display: none;
+  position: absolute;
+  bottom: 40px;
+  left: -36px;
+  padding: 4px 10px 4px 10px;
+  background: #FFF;
+  border-radius: 6px;
+  border: 1px solid #FFFFFF;
+  z-index: 2010;
+  width: 110px;
+  text-align: center;
+  }
+
+.comisaria-marker .bloque1 {
+  background: #FFF;
+  border-radius: 30px;
+  text-align: center;
+  padding: 4px;
+  z-index: 2050;
+  position: relative; }
+
+.comisaria-marker .bloque2 {
+  overflow: hidden;
+  border-radius: 30px;
+  width: 30px;
+  height: 30px; }
+
+.comisaria-marker:hover .comisaria-nombre {
+  display: block; }
+
+.gm-style img {
+  max-width: none; }
+
+.comisaria-marker .pie {
+  display: block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 10px 0 10px;
+  border-color: #FFF transparent transparent transparent;
+  margin: -3px auto auto; }
+
+.panel-tab-tabs a {
+    display: block;
+    float: left;
+    padding: 4px;
+    background: #ececec;
+    margin-right: 2px;
+    color: #333;
+    border-radius: 6px 6px 0px 0px;
+    text-decoration: none;
+}
+
+.panel-tab-tabs a.active {
+    background: #cccccc;
+    color: #000;
+    display:block;
+}
+
+.panel-tab-tabs a.inactive {
+    display:none;
+    color: #000;
+    opacity(40);
+    pointer-events: none;
+}
+
+.panel-tab-tabs:after {
+    display: block;
+    clear: both;
+    content: '';
+}
+
+.panel-tab-group {
+    border-radius: 0px 10px 10px 10px;
+    border: 1px solid #ccc;
+    background-color: white;
+    padding: 7px;
+}
+
+.panel-tab-content {
+    display: none;
+}
+.panel-tab-content.active {
+    display: block;
+}
+
+.panel-tab-result {
+    display: none;
+}
+.panel-tab-result.active {
+    display: block;
+}
+.dv-resultado {
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+    padding: 8px;
+}
+.cont-vehiculo, .cont-comisaria, .cont-radio {
+    height: 150px;
+    overflow-y: scroll;
+}
+
+a.itm-comisaria {
+    display: block;
+    border: 1px solid #ddd;
+    margin-bottom: 4px;
+    margin-right: 4px;
+    padding: 4px;
+    text-decoration: none;
+    border-radius:4px;
+}
+
+a.itm-vehiculo {
+    display: block;
+    border: 1px solid #ddd;
+    margin-bottom: 4px;
+    margin-right: 4px;
+    padding: 4px;
+    text-decoration: none;
+    border-radius:4px;
+}
+a.itm-vehiculo .lbl-placa{
+    float:left;
+}
+a.itm-vehiculo .lbl-hora{
+    float:right;
+}
+
+
+a.itm-radio {
+    display: block;
+    border: 1px solid #ddd;
+    margin-bottom: 4px;
+    margin-right: 4px;
+    padding: 4px;
+    text-decoration: none;
+    border-radius:4px;
+}
+a.itm-radio .lbl-etiq{
+    float:left;
+}
+a.itm-radio .lbl-hora{
+    float:right;
+}
+
+
+@media (max-height: 600px) {
+.filtro-info .content {
+    max-height: 380px;
+    overflow-y: scroll;
+}
+/*@media (max-height: 900px) {
+.filtro-info .content {
+    max-height: 380px;
+    overflow-y: scroll;
+}*/
+
+.filtro-info .item .field {width: 150px;float: left;}
+}
+
+.btn-exportar{
+    float: left;
+    display: block;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.btn-limpiar{
+    float: left;
+    display: block;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.panel-vehi-cabecera{
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #337ab7;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size:12px;
+    margin-top:0;
+    margin-left:1px;
+    margin-right:5px;
+    margin-bottom:2px;
+    padding:2px;
+}
+.cab_vehi
+{ 
+  padding-left:2px;
+}
+
+.cont-radio .panel{
+  margin-bottom:10px;
+}
+
+.panel-radio-cabecera{
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #337ab7;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size:12px;
+    margin-top:0;
+    margin-left:1px;
+    margin-right:5px;
+    margin-bottom:2px;
+    padding:2px;
+}
+.cab_radio
+{ 
+  padding-left:2px;
+}
+
+.cont-radio .panel{
+  margin-bottom:10px;
+}
+
+.logos {
+    position: absolute;
+    bottom: 25px;
+    right: 50px;
+}
+.logos img{
+    height:58px;
+}
+
+.radio-marker {
+  position: absolute;
+  cursor: pointer;
+  width: 38px;
+  height: 45px;
+  z-index: 2000; }
+
+
+
+.radio-marker .bloque1 {
+  background: #FFF;
+  border-radius: 30px;
+  text-align: center;
+  padding: 4px;
+  z-index: 2050;
+  position: relative; }
+
+.radio-marker .bloque2 {
+  overflow: hidden;
+  border-radius: 30px;
+  width: 30px;
+  height: 30px; }
+
+.radio-marker:hover .radio-etiqueta, .alarma-marker:hover .alarma-etiqueta, .camara-marker:hover .camara-etiqueta,
+.incidencia-marker:hover .incidencia-etiqueta {
+  display: block; }
+
+.radio-marker .pie {
+  display: block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 10px 0 10px;
+  border-color: #FFF transparent transparent transparent;
+  margin: -3px auto auto; }
+
+  .leyenda{
+    position: absolute;
+    z-index: 1010;
+    top: 10px;
+    width: 70px;
+    height: 23px;
+    text-align: center;
+    color: white;
+    background-color: rgba(140, 120, 30, 0.91);
+    right: 30px;
+    border-radius: 15px;
+}
+
+  .leyenda_modal{
+    position: absolute;
+    z-index: 1010;
+    top: 50px;
+    width: 70px;
+    height: 23px;
+    text-align: center;
+    color: white;
+    right: 30px;
+    border-radius: 15px;
+}
+
+  .geocerca{
+    position: absolute;
+    z-index: 1010;
+    top: 90px;
+    width: 162px;
+    text-align: right;
+    color: white;
+    right: 20px;
+    border-radius: 15px;
+}
+
+  .geocerca a{
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+  #btnAgregarIncidencia{
+    position: absolute;
+    z-index: 1010;
+    top: 20px;
+    width: 120px;
+    height: 23px;
+    text-align: center;
+    color: black;
+    background-color: rgb(249, 157, 39);
+    right: 30px;
+    border-radius: 15px;
+    font-weight: bold;
+  }
+
+.moving-map,
+.moving-map * {cursor: move !important;} 
+
+.leyenda .leyenda-contenido.active {
+    top: 24px;
+    background: #FFF;
+    color:black;
+    padding: 10px;
+    border-radius: 4px;
+    right: 0px;
+    width: 290px;
+    border: 1px solid #da3a26;
+    position: absolute;
+    max-height: 520px;
+    overflow-y: scroll;
+    z-index: 1050;
+}
+.leyenda .leyenda-contenido.inactivo {
+    display: none;
+}
+.detalle_leyenda{
+      width: 40px;
+}
+.leyenda_desc{
+    text-align: left;
+}
+.fuente {
+      font-size: 10px;
+      margin-top: 3px;
+}
+/*
+.leyendatr{
+    border: 1px solid black;
+}
+
+*/
+
+.app-bg-loader {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: rgba(255,255,255,0.5);
+    z-index: 99990;
+    top: 0;
+    left: 0;
+}
+
+.app-bg-loader img {
+  display: block;
+}
+.itm-comisaria.comisaria-activa {
+    color: #FFF;
+    background: #2c6c5e;
+}
+
+.sipcop-ui-modal {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 999999;
+    background: rgba(0,0,0,0.5);
+    top: 0;
+    left: 0;
+    display: none;
+}
+
+.sipcop-streetview {
+    display: none;
+    position:absolute;
+    width: 80%;
+    height: 80%;
+}
+
+.sipcop-streetview-frame {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    border-radius: 10px;
+    border: 2px solid #FFF;
+    overflow: hidden;
+    background: #FFFFFF;
+}
+
+
+.sipcop-closable{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.sipcop-streetview-close{
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 30px;
+    height: 30px;
+    z-index: 1001;
+    background: #d22712;
+    display: block;
+    color: #FFF;
+    font-weight: bold;
+    text-align: center;
+    line-height: 27px;
+    text-decoration: none;
+    border-radius: 60px;
+}
+
+
+
+
+.camara-marker {
+  position: absolute;
+  cursor: pointer;
+  width: 38px;
+  height: 45px;
+  z-index: 2000; }
+
+
+.camara-marker .bloque1 {
+  background: #FFF;
+  border-radius: 30px;
+  text-align: center;
+  padding: 4px;
+  z-index: 2050;
+  position: relative; }
+
+.camara-marker .bloque2 {
+  overflow: hidden;
+  border-radius: 30px;
+  width: 30px;
+  height: 30px; }
+
+
+.camara-marker .pie {
+  display: block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 10px 0 10px;
+  border-color: #FFF transparent transparent transparent;
+  margin: -3px auto auto; }
+
+
+  .alarma-marker {
+  position: absolute;
+  cursor: pointer;
+  width: 38px;
+  height: 45px;
+  z-index: 2000; }
+
+
+.alarma-marker .bloque1 {
+  background: #FFF;
+  border-radius: 30px;
+  text-align: center;
+  padding: 4px;
+  z-index: 2050;
+  position: relative; }
+
+.alarma-marker .bloque2 {
+  overflow: hidden;
+  border-radius: 30px;
+  width: 30px;
+  height: 30px; }
+
+
+.alarma-marker .pie {
+  display: block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 10px 0 10px;
+  border-color: #FFF transparent transparent transparent;
+  margin: -3px auto auto; }
+
+
+.incidencia-marker {
+  position: absolute;
+  cursor: pointer;
+  width: 38px;
+  height: 45px;
+  z-index: 2000; }
+
+
+.incidencia-marker .bloque1 {
+  background: #FFF;
+  border-radius: 30px;
+  text-align: center;
+  padding: 4px;
+  z-index: 2050;
+  position: relative; }
+
+.incidencia-marker .bloque2 {
+  overflow: hidden;
+  border-radius: 30px;
+  width: 30px;
+  height: 30px; }
+
+
+.incidencia-marker .pie {
+  display: block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 10px 0 10px;
+  border-color: #FFF transparent transparent transparent;
+  margin: -3px auto auto; }
+
+.mapa-capas {
+    clear: both;
+    width: 100%;
+}
+
+.mapa-capas div {
+    float: left;
+    width: 48%;
+}
+
+.lblmarker {
+    color: #000;
+    background-color: white;
+    font-family: "Lucida Grande", "Arial", sans-serif;
+    font-size: 10px;
+    text-align: center; 
+    border: 1px solid #CCC;
+    white-space: nowrap;
+    padding: 2px;
+    border-radius: 6px;
+    width: 90px;
+    z-index: 1050!important;
+}
+.lblmarker-hide{
+    display: none!important;
+}
+.gmnoprint {
+    z-index: 5040!important;
+}
+a.fil-searching {
+    background: #368cb5!important;
+    border: 1px solid #29843d!important;
+}
+
+
+
+
+.columns
+{
+  float:left;
+  display:inline-block;
+  width:120px;
+  height:110px;
+}
+
+.card_leyenda {
+  background: #fff;
+  display: inline-block;
+  border: 1px solid #ddd;
+  width: 260px;
+  height: 60px;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.image_leyenda {
+  float: left;
+  width: 25%;
+  border-right: 1px solid #ddd;
+}
+
+.content_leyenda {
+  float: left;
+  width: 73%;
+  overflow: hidden;
+  padding-top: 4px;
+  padding-left: 5px;
+}
+
+.content_leyenda h4 {
+  margin: 5px 0;
+  padding: 15px;
+}
+
+.viewpanel::-webkit-scrollbar-track
+{
+    background: #ddd;
+}
+
+.viewpanel::-webkit-scrollbar
+{
+    width: 5px;
+}
+
+.viewpanel::-webkit-scrollbar-thumb
+{
+  background: #666; 
+}
+
+.viewpanel{
+    position: absolute;
+    z-index: 1000;
+    top: 0px;
+    background: #FFF;
+    padding: 10px;
+    overflow: auto;
+    overflow-x: hidden;
+    /*height: 100%;*/
+    width: 408px;
+    -webkit-box-shadow: 6px 1px 5px 0px rgba(50, 50, 50, 0.51);
+    -moz-box-shadow:    6px 1px 5px 0px rgba(50, 50, 50, 0.51);
+    box-shadow:         6px 1px 5px 0px rgba(50, 50, 50, 0.51);
+}
+
+.viewpanel .viewpanel_header{
+    width: 408px;
+    margin-left: -10px;
+    margin-top: -10px;
+    padding-top: 8px;
+    color: white;
+    padding-bottom: 15px;
+    /*background: #1fb5ade0 !important;*/
+    background: #118fbd !important;
+}
+
+.viewpanel .viewpanel_route {
+    width: 408px;
+    margin-left: -10px;
+    margin-top: -10px;
+    padding-top: 8px;
+    color: white;
+    padding-bottom: 15px;
+    background: #00628d !important;
+}
+
+.viewpanel .viewpanel_content {
+    width: 408px;
+    margin-left: -10px;
+}
+
+
+.viewpanel .viewpanel_content .lista {
+    /*background-color: red;*/
+    /*width: 408px;*/
+    /*position: absolute;*/
+    padding: 8px;
+
+    /*height: 450px;*/
+
+}
+
+.viewpanel .viewpanel_content .lista span {
+    /*background-color: red;*/
+ 
+    padding: 8px
+
+}
+
+.line{
+  width: 270px;
+  margin-top: -5px;
+  margin-left: -6px;
+  border-bottom: 1px solid #9e8f8fd9;;
+  position: absolute;
+}
+
+.viewpanel_footer {
+    width: 408px;
+    position: absolute;
+    background-color: green;
+    bottom: 0;
+    z-index: 1010;
+    left: 0;
+}
