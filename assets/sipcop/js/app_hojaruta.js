@@ -193,7 +193,7 @@ var hojaruta_api = {
           $('#txtFormPlaca').html('<option value="0">-- Seleccione --</option>');
           $.each(data.placas, function(index, obj){
             var seleccionado = "";
-            $('#txtFormPlaca').append('<option value="'+obj.IDDISPOGPS+'">'+obj.PLACA+'</option>');
+            $('#txtFormPlaca').append('<option value="'+obj.PLACA+'">'+obj.PLACA+'</option>');
           });
           if(callback){
             callback();
@@ -221,22 +221,72 @@ var hojaruta_api = {
 
       var objDatos = {placa:placa,operador:operador,chofer:chofer,fecha:fecha,idinstitucion:idinstitucion};
 
-      var datos = hojaruta_api.mrkDatos;
+      var rutas = hojaruta_api.mrkDatos;
 
-      SipcopJS.post('admin/ruta/json_save',{objDatos,datos}, function(data){
+      SipcopJS.post('admin/ruta/json_save',{objdatos:objDatos,rutas:rutas}, function(data){
 
-      });
+                console.log(data);
+                // if(data > 0){
+                //   swal(
+                //     'Good job!',
+                //     'You clicked the button!',
+                //     'success'
+                //   )
+                // }
+                // if(callback){
+                //   callback({resp:'ok', status:'1'});
+                // }
+                //   var cad = '<table width="100%" border="0">'+
+                //               '<thead><tr><th>Turno</th>';
+                //               if($('#ckPatrullero').is(':checked')){
+                //                   cad+='<th style="text-align:center">Patrulleros</th>';
+                //               }
+                //               if($('#ckMotorizado').is(':checked')){
+                //                   cad+='<th style="text-align:center">Motorizados</th>';
+                //               }
+                //               if($('#ckPatpie').is(':checked')){
+                //                   cad+='<th style="text-align:center">Pat. Pie</th>';
+                //               }
+                //               if($('#ckPuestoFijo').is(':checked')){
+                //                   cad+='<th style="text-align:center">P. Fijo</th>';
+                //               }
+                //               if($('#ckBarrioSeguro').is(':checked')){
+                //                   cad+='<th style="text-align:center">B. Seg.</th>';
+                //               }
+
+                //               cad+='</tr></thead>'+
+                //               '<tbody>';
+                //    $.each(data.resumen_turno, function(idx, obj){
+                //           cad += '<tr><td>'+obj.TURNO+'</td>';
+                //           if($('#ckPatrullero').is(':checked')){
+                //               cad += '<td align="center">'+(parseInt(obj.TotalPatrullero)+parseInt(obj.TotalPatInt))+'/'+(parseInt(data.resumen_total.TotalPatrullero)+parseInt(data.resumen_total.TotalPatInt))+'</td>';
+                //           }
+                //           if($('#ckMotorizado').is(':checked')){
+                //               cad += '<td align="center">'+obj.TotalMotorizado+'/'+data.resumen_total.TotalMotorizado+'</td>';
+                //           }
+                //           if($('#ckPatpie').is(':checked')){
+                //               cad += '<td align="center">'+obj.TotalPatPie+'/'+data.resumen_total.TotalPatPie+'</td>';
+                //           }
+                //           if($('#ckPuestoFijo').is(':checked')){
+                //               cad += '<td align="center">'+obj.TotalPuestoFijo+'/'+data.resumen_total.TotalPuestoFijo+'</td>';
+                //           }
+                //           if($('#ckBarrioSeguro').is(':checked')){
+                //               cad += '<td align="center">'+obj.TotalBarrioSeg+'/'+data.resumen_total.TotalBarrioSeg+'</td>';
+                //           }
+                //           cad += '</tr>';
+                //   });
+                // cad += '</tbody></table>';
+                // $(contenedor).html(cad);
 
 
-
-
-
-
-
-      // console.log(objDatos);
-
-      // console.log(hojaruta_api.mrkDatos);
-
+                if(callback){
+                    callback({resp:'ok', status:'1'});
+                }
+            },'json').fail(function(err){
+                if(callback){
+                    callback({err:err, status:'0'});
+                }
+            });
 
     },
 
@@ -249,7 +299,7 @@ var hojaruta_api = {
     //     hojaruta_api.mrkDatos[index].direccion  = direccion;        
     // },
 
-   removeA:function (txt) {
+  removeA:function (txt) {
        // var index = hojaruta_api.mrkDatos.indexOf(txt);
        // var index = map_api.mrkDatos.findIndex((item) => item.name === txt);
        // if(index !== -1){
@@ -274,10 +324,10 @@ var hojaruta_api = {
         // delete hojaruta_api.renderer;
         // hojaruta_api.renderer = null;
         // hojaruta_api.generarRuta();
-    },
+  },
 
 
-    addMarcador:function (location,hora,motivo) {
+  addMarcador:function (location,hora,motivo) {
 
           hojaruta_api.buscarDireccion(location.lat(),location.lng(), function(direccion){
             if(direccion && direccion!=''){
@@ -332,15 +382,7 @@ var hojaruta_api = {
             hojaruta_api.mrkDatos.push(objDatos);
 
         });
-
-
-
-
     },
-
-
-
-
 
     removerMarker: function(mrk){
       mrk.setMap(null);

@@ -13,11 +13,11 @@ $query_builder = TRUE;
 //$ins_srv = 'BD_TRAMITE';
 
 /*DB Producción II*/
-  $ip_srv = '172.22.0.76';
+  // $ip_srv = '172.22.0.76';
  $ins_srv = 'bdstdmi';
 
 /*DB DESARROLLO*/
-//$ip_srv = '172.22.0.68';
+$ip_srv = '172.22.0.68';
 // $ins_srv = 'bdstdmi';
 
 $tnsname = '(DESCRIPTION = (ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST =  '.$ip_srv.')(PORT = 1521)) ) (CONNECT_DATA = (SERVICE_NAME = '.$ins_srv.') ) )';

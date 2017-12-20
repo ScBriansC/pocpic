@@ -19,27 +19,41 @@ class Hojaruta_model extends Base_model {
     }
 
 
-    function saveHojaruta($placa,$operador,$chofer,$fecha,$idinstitucion){
+    function addHojaruta($placa,$operador,$chofer,$fecha,$idinstitucion){
         $id = $this->get_NuevoID();
         if($id > 0){
             $this->db->set('IDHOJARUTA',$id);
+            $this->db->set('IDINSTITUCION', $idinstitucion);
             $this->db->set('PLACA', $placa);
             $this->db->set('OPERADOR', $operador);
             $this->db->set('CHOFER', $chofer);
-            $this->db->set('FECHA', "TO_DATE('".$fecha."','YYYY-MM-DD')",false);
+            $this->db->set('FECHA', "TO_DATE('".$fecha."','DD-MM-YYYY')",false);
             $this->db->set('FLGACTIVO',1);
             $this->db->set('FECHAREG',"(SYSDATE)",false);
-            $this->db->set('FLGACTIVO',1);
             if($this->db->insert($this->model_name)){
                 return $id;
             }
-             // print_r($this->db->last_query());
+            // print_r($this->db->last_query());
         }
         return FALSE;
     }
 
+    function addRuta($idhojaruta,$latitud,$longitud,$direccion,$motivo,$hora,$orden,$fecha){
+        $this->db->set('IDHOJARUTA',$idhojaruta);
+        $this->db->set('LATITUD', $latitud);
+        $this->db->set('LONGITUD', $longitud);
+        $this->db->set('DIRECCION', $direccion);
+        $this->db->set('MOTIVO', $motivo);
+        $this->db->set('HORA', "TO_DATE('".$fecha." ".$hora.":00','DD-MM-YYYY HH24:MI:SS')",false);
+        $this->db->set('ORDEN', $orden);
+        $this->db->set('FLGACTIVO',1);
+        if($this->db->insert('SISGESPATMI.TH_RUTAS')){
+            return $idhojaruta;
+        }
 
-
+        return FALSE;
+        // print_r($this->db->last_query());
+    }
 
 	
 }

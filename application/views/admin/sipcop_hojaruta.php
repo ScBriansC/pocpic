@@ -187,20 +187,6 @@ preCarga = function(){SipcopJS.logEnabled = true;
         }
     }); 
 
-	// $('input[name="datefilter"]').daterangepicker({
-	//       autoUpdateInput: false,
-	//          singleDatePicker: true,
-	//       locale: {
-	//           cancelLabel: 'Clear'
-	//       }
-	// });
-	// $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
-	//       $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
-	// });
-	// $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
-	//       $(this).val('');
-	// });
-
 	var htmlautomatic = 
 					  '<div class="form-group col-sm-12">'+
 			          '<label class="control-label col-sm-3" for="txtFormGenRuta" style="margin-top: 3px">INICIO:</label>'+
@@ -212,21 +198,6 @@ preCarga = function(){SipcopJS.logEnabled = true;
 			          '</div>'
 			          ;
 
-	// $('#txtFormGenRuta').change(function(){
-	//     var id = parseInt($(this).val());
-	//     if(id == 0){
-	//     	$('#route_automatic').html('');
-
-	//     }else if(id == 1){
-	//     	$('#route_automatic').html('');
-	//     	hojaruta_api.manualRuta();
-
-	//     }else if(id == 2){
-	// 		$('#route_automatic').html(htmlautomatic);
-	// 		hojaruta_api.preCathRuta();
-	//     }
-
-	// });
 	$('#generarRuta').click(function(){
 			hojaruta_api.generarRuta();
 		});

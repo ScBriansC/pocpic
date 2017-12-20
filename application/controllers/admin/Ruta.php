@@ -42,12 +42,9 @@ class Ruta extends Sys_Controller {
     }
 
 	public function index(){
-		
 		$usuario = $this->getUsuarioLogin();
 		$data = array();
 		$data['usu_jurisdiccion'] = $this->m_institucion->_get_jurisdiccion_usuario($usuario['IDUSUARIO']);
-
-
 		$parametroFooter = array(
             'jslib' => array(
                 'assets/js/advanced-datatable/js/jquery.dataTables.js',
@@ -57,87 +54,46 @@ class Ruta extends Sys_Controller {
                 'assets/js/highcharts/highcharts.exporting.js'
             ),
         );
-
 		$usuario = $this->getUsuarioLogin();
 		$data['usu_jurisdiccion'] = $this->m_institucion->_get_jurisdiccion_usuario($usuario['IDUSUARIO']);
-
 		if($usuario['IDROL'] == 5){
             redirect('/admin/home/sesusu', 'refresh');
         }else{
             $data_header = array('wrapper_class'=>'wrapper_mapa');
             $this->sys_render('admin/sipcop_hojaruta', $data, $data_header, $parametroFooter);
         }
-
 	}
 
 	public function json_save(){
-		
-		// $placa = @$_POST(objDatos['placa']);
-		$placa =  @$_POST([objDatos]['placa']);
-		$operador = @$_POST['operador'];
-		$chofer = @$_POST['chofer'];
-		$fecha = @$_POST['fecha'];
-		$idinstitucion = @$_POST['idinstitucion'];
 
-		// $result= array();
+		$objdatos =  @$_POST['objdatos'];
+		$objrutas =  @$_POST['rutas'];
 
-		// $result['status'] = 'error';
-		// $result['msj'] = 'No se detectó datos';
+		$result= array();
+		$result['status'] = 'error';
+		$result['msj'] = 'No se detectó datos';
 
-		// $addhojaruta = $this->m_hojaruta->saveHojaruta($placa,$operador,$chofer,$fecha,$idinstitucion);
-		// // $data['data'] = $this->m_hojaruta->saveHojaruta($placa,$operador,$chofer,$fecha,$idinstitucion);
+		$idhojaruta = $this->m_hojaruta->addHojaruta($objdatos['placa'],$objdatos['operador'],$objdatos['chofer'],$objdatos['fecha'],$objdatos['idinstitucion']);
 
-		// if($addhojaruta > 0){
-		// 	$result['status'] = 'success';
-		// 	$result['msj'] = 'Incidencia Registrada!';
-		// }else{
-		// 	$result['status'] = 'error';
-		// 	$result['msj'] = 'No se pudo registrar la incidencia!';
-		// }
+		if($idhojaruta > 0){
 
-		// $addIncidencia = $this->m_incidencia->add_incidencias($titulo,$detalle,$idtipo,$estado,$direccion,$latitud,$longitud,$idusuario,$ipmaq);
-		// // print_r($addIncidencia);
-		// if($addIncidencia > 0){
-		// 	if(is_array($archivos) && count($archivos)>0){
-		// 		foreach ($archivos as $archivo) {
-		// 			// print_r($archivo);
-		// 			$addArchivo = $this->m_incidencia->add_Archivos($addIncidencia,$idusuario,$archivo['ArchivoNombre'],$archivo['ArchivoTipo']);
+			if(is_array($objrutas) && count($objrutas)>0){
+				foreach ($objrutas as $key=>$ruta) {
+					$addRuta = $this->m_hojaruta->addRuta($idhojaruta,$ruta['lat'],$ruta['lng'],$ruta['direccion'],$ruta['motivo'],$ruta['hora'],$key,$objdatos['fecha']);
+				}	
+				$result['status'] = 'success';
+				$result['msj'] = 'Se pudo registrar ruta';
+			}else{
+				$result['status'] = 'error';
+				$result['msj'] = 'No se pudo registrar la ruta';
+			}
+		}else{
 
-		// 		}				
-		// 	}
-		// 	$result['status'] = 'success';
-		// 	$result['msj'] = 'Incidencia Registrada!';
-		// 	// $result['idreporte'] = $idreporte;
-		// }
+			$result['status'] = 'error';
+			$result['msj'] = 'No se pudo registrar la hoja de ruta';
 
-		// else{
-		// 	$result['status'] = 'error';
-		// 	$result['msj'] = 'No se pudo registrar la incidencia!';
-		// }
-
-		echo json_encode($placa);
-
-
-
-
-
+		}
+		echo json_encode($result);
 	}
-
-	// public function json_comisaria(){
-	// 	$ubigeo = @$_POST['ubigeo'];
-	// 	$data = array();
-	// 	$data['data'] = $this->m_comisaria->get_Comisarias($ubigeo);
-	// 	$this->json_output($data);
-	// }
-
-	// public function json_dependencia(){
-	// 	$tipo = @$_POST['tipo'];
-	// 	$padre = @$_POST['padre'];
-	// 	$usuario = $this->getUsuarioLogin();
-	// 	$tipoinst = @$_POST['tipoinst'];
-	// 	$data = array();
-	// 	$data['data'] = @$this->m_institucion->get_Combo($tipo, $padre,$usuario['IDUSUARIO'],$tipoinst);
-	// 	$this->json_output($data);
-	// }
 
 }
