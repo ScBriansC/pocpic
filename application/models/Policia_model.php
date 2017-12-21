@@ -17,4 +17,29 @@ class Policia_Model extends Base_model {
         // Crea referencia a la clase de modelo padre
         parent::__construct('SISGESPATMI.TM_POLICIA', 'IDPOLICIA');
     }
+
+
+
+    // function json_policia($idinstitucion){
+  	
+    // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

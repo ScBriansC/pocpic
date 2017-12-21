@@ -96,4 +96,24 @@ class Ruta extends Sys_Controller {
 		echo json_encode($result);
 	}
 
+
+	public function json_hojaruta(){
+
+		$fecha = @$_POST['fecha'];
+		$result = array();
+
+		$result['status'] = 'error';
+		$result['msj'] = 'No se detectó datos';
+
+		$data['hoja_ruta']  = $this->m_hojaruta->get_hojaruta($fecha);
+		$this->json_output($data);
+
+	}
+
+
+
+
+
+
+
 }

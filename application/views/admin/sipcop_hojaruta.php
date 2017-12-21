@@ -24,9 +24,18 @@ $usu_rol = $obj_usuario['IDROL'];
 <script type="text/javascript" src="assets/sipcop/js/comision.js?<?php echo rand(1,1000); ?>"></script>
 <script type="text/javascript" src="assets/sipcop/js/app_hojaruta.js?<?php echo rand(1,1000); ?>"></script>
 
+<div class="app-bg-loader"><img src="assets/sipcop/img/loader.gif" width="320"></div>
 <div id="cnv_map" class="map-full" style="overflow:hidden;"></div>
 <div class="viewpanel">	
-	<div class="viewpanel_header">
+	<div class="viewpanel_menu">
+		<div class="viewpanel_menur">
+			CREAR
+		</div>
+		<div class="viewpanel_menul">
+			LISTAR
+		</div>
+	</div>
+	<div class="viewpanel_header" id="header_registrar">
 		<div class="container-fluid">
 			<div class="form-group col-sm-12">
                <label class="control-label col-sm-12" for="txtFormVehiculo">VEHICULO: </label>
@@ -74,7 +83,17 @@ $usu_rol = $obj_usuario['IDROL'];
              <input type="checkbox" id="ckJurisdiccion" value="1" checked style="display: none" />
 		</div>
 	</div>
-	<div class="viewpanel_route">
+	<div class="viewpanel_header" id="header_listar" style="display:none;">
+		<div class="container-fluid">
+             <div class="form-group col-sm-12">
+             	<label class="control-label col-sm-12" for="txtFormFecha">FECHA: </label>
+                <div class="col-sm-12">
+                    <input type="text" name="datelistar" class="form-control" id="txtFromFechalistar" />
+                </div>
+             </div>
+		</div>
+	</div>
+	<div class="viewpanel_route" id="route_registrar">
 		<div class="container-fluid">
 			<div class="row">
 				<center><label class="control-label col-sm-12">OPCIONES DE RUTA:</label></center>
@@ -83,63 +102,58 @@ $usu_rol = $obj_usuario['IDROL'];
 				<button class="btn btn-warning" id="generarRuta">
 	  			    GENERAR RUTA
 	  			</button>
-	  			<button class="btn btn-primary">
-	  			    EXPORTAR EXCEL
-	  			</button>
 	  			<button class="btn btn-danger" id="deleteRuta">
 	  			    	X
 	  			</button>
 			</center>
-			
-<!-- 				<div class="form-group col-sm-12">
-	               <label class="control-label col-sm-12" for="txtFormGenRuta">GENERAR RUTA: </label>
-	               <div class="col-sm-12">
-	                    <select name="txtFormGenRuta" id="txtFormGenRuta" class="form-control">
-	                    	<option value="0">-- Seleccione --</option>
-	                    	<option value="1">MANUAL</option>
-	                    	<option value="2">AUTOMATICO</option>
-	                    </select>
-	                </div>	
-	            </div> -->
-	            <!-- <div id="route_automatic"></div> -->
-		<!-- 	</div> -->
+		</div>
+	</div>
+	<div class="viewpanel_route" id="route_listar" style="display:none;">
+		<div class="container-fluid">
+			<center><div class="form-group col-sm-12">
+             	<center><button class="btn btn-primary" id="btnBuscar">BUSCAR</button></center>
+             </div></center>
 		</div>
 	</div>
 
-	<div class="app-bg-loader"><img src="assets/sipcop/img/loader.gif" width="320"></div>
-
-	<div class="viewpanel_content">
-		<!-- <div class="lista">
-			<div class="container-fluid" id="lista_contenido">
-	
-				<div class="row">
-					<div class="col-md-9"><p>Carr. Panamericana Sur/Vía Evitamiento/Carretera 1S y Auxiliar Panamericana Nte./Carretera Panamericana Norte</p></div>
-  					<div class="col-md-3"><input type="text" class="form-control" value="12:00" style="text-align: center"></div>
-				</div>
-				<div class="line"></div>
-			</div>
-		</div> -->
-		<!-- <div class="row"> -->
-				<table class="table table-responsive table-bordered" id="myTable">
-					 <thead>
-				      <tr>
-				        <th>#</th>
-				        <th>Hora</th>
-				        <th>Zona/Lugar</th>
-				        <th>Motivo</th>
-				      </tr>
-				    </thead>
-				    <tbody id="cuerpo">
-				      
-				    </tbody>
-			</table>
-		<!-- </div> -->
+	<div class="viewpanel_content" id="content_registrar">
+		<table class="table table-responsive table-bordered" id="myTable">
+			 <thead>
+		      <tr>
+		        <th style="text-align: center">#</th>
+		        <th style="text-align: center">Hora</th>
+		        <th style="text-align: center">Zona/Lugar</th>
+		        <th style="text-align: center">Motivo</th>
+		      </tr>
+		    </thead>
+		    <tbody id="cuerpo">
+		    </tbody>
+		</table>
 	</div>
 
+	<div class="viewpanel_content" id="content_listar" style="display:none;">
+		<table class="table table-responsive table-bordered" id="tbl-hojaruta">
+			 <thead>
+		      <tr>
+		        <th style="text-align: center">Placa</th>
+		        <th style="text-align: center">Fecha</th>
+		        <th style="text-align: center">Chofer</th>
+		        <th style="text-align: center">Operador</th>
+		        <th style="text-align: center">Opciones</th>
+		      </tr>
+		    </thead>
+		    <tbody id="cuerpo">
+		    </tbody>
+		</table>
+	</div>
+
+
 </div>
+
 <div class="viewpanel_footer">
 	<center><a class="btn btn-sucess" style="color:white;" id="guardarRuta"><b>GUARDAR</b></a></center>
 </div>
+
 <div class="logos"><img src="assets/img/logos.png"></div>
 
 <div id="myModal" class="modal fade" role="dialog">
@@ -187,6 +201,15 @@ preCarga = function(){SipcopJS.logEnabled = true;
         }
     }); 
 
+
+    $('input[name="datelistar"]').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true,
+        locale: {
+            format: 'DD/MM/YYYY'
+        }
+    }); 
+
 	var htmlautomatic = 
 					  '<div class="form-group col-sm-12">'+
 			          '<label class="control-label col-sm-3" for="txtFormGenRuta" style="margin-top: 3px">INICIO:</label>'+
@@ -208,6 +231,36 @@ preCarga = function(){SipcopJS.logEnabled = true;
 	$('#guardarDatos').click(function(){
 		hojaruta_api.guardarDatos();
 	});
+
+	$('.viewpanel_menur').click(function(){
+		$('#header_listar').hide();
+		$('#route_listar').hide();
+		$('#content_listar').hide();
+
+		$('#header_registrar').show();
+		$('#route_registrar').show();
+		$('#content_registrar').show();
+		$('.viewpanel_footer').show();
+	});
+
+	$('.viewpanel_menul').click(function(){
+		$('#header_registrar').hide();
+		$('#route_registrar').hide();
+		$('#content_registrar').hide();
+		$('.viewpanel_footer').hide();
+		$('#header_listar').show();
+		$('#route_listar').show();
+		$('#content_listar').show();
+	});
+
+
+    $('#btnBuscar').click(function(){
+    	// $('#tbl-hojaruta').append('');s
+    	$('#tbl-hojaruta tbody').html('');
+    	hojaruta_api.buscarHojaRuta();
+    });
+
+
 
 
 
@@ -235,7 +288,7 @@ preCarga = function(){SipcopJS.logEnabled = true;
     $(window).resize(function(){
         $('#cnv_map').css('width','100%');
         $('#cnv_map').height($(window).height()-$('header.header').height() - 6);
-        $('.viewpanel').height($(window).height()-$('.viewpanel_footer').height()-77);
+        $('.viewpanel').height($(window).height()-$('.viewpanel_footer').height()-51);
     });
 
     $(window).resize();

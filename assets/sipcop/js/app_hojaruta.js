@@ -290,14 +290,30 @@ var hojaruta_api = {
 
     },
 
-    // update: function(txt, newlat, newlng,direccion)
-    // { 
-    //   // console.log(newlat + " "+ newlng);
-    //   var index = hojaruta_api.mrkDatos.findIndex((item) => item.name === txt);
-    //     hojaruta_api.mrkDatos[index].lat = newlat;
-    //     hojaruta_api.mrkDatos[index].lng  = newlng; 
-    //     hojaruta_api.mrkDatos[index].direccion  = direccion;        
-    // },
+   buscarHojaRuta: function(){
+      
+      var fecha = $('#txtFromFechalistar').val();
+
+      SipcopJS.post('admin/ruta/json_hojaruta',{fecha:fecha}, function(data){
+            if(data.hoja_ruta !=''){
+              $.each(data.hoja_ruta, function(index, obj){
+                  $('#tbl-hojaruta').append('<tr><td>'+ obj.placa+'</td><td>'+obj.fecha+'</td><td>'+ obj.chofer +'</td><td>'+obj.operador+'</td><td><a href="javascript:;" onclick="hojaruta_api.modalDetalle('+obj.idhojaruta+')" class="btn btn-primary btn-xs tooltips" data-toggle="button" data-placement="top" data-original-title="Ver"><i class="fa fa-search"></i></a></td></tr>');
+              });
+            }
+            else{
+              $('#tbl-hojaruta').append('<tr><td colspan="5" style="text-align:center;">NO HAY DATOS</td></tr>');
+            } 
+
+
+     
+      });
+
+
+    },
+
+  modalDetalle: function($idhojaruta){
+    alert($idhojaruta);
+  },
 
   removeA:function (txt) {
        // var index = hojaruta_api.mrkDatos.indexOf(txt);

@@ -55,5 +55,11 @@ class Hojaruta_model extends Base_model {
         // print_r($this->db->last_query());
     }
 
-	
+    function get_hojaruta($fecha){
+        $sql = 'SELECT IDHOJARUTA as "idhojaruta" ,PLACA as "placa",FECHA as "fecha",CHOFER as "chofer",OPERADOR as "operador" FROM SISGESPATMI.TM_HOJARUTA WHERE FLGACTIVO=1 AND FECHA = TO_DATE(\''.$fecha.'\',\'DD/MM/YYYY\')';
+        $query = $this->db->query($sql);
+        return $query->result_array();   
+
+    }
+
 }
